@@ -5,7 +5,8 @@ var bodyParser = require('body-parser');
 var port = process.env.PORT || '3000';
 
 //Import routes
-var index = require('./routes/index.route');
+var poll = require('./routes/poll.route');
+var auth = require('./routes/auth.route');
 
 var app = express();
 
@@ -15,7 +16,8 @@ app.use(cookieParser());
 
 
 //Routes
-app.use('/', index);
+app.use('/auth', auth);
+app.use('/poll', poll);
 
 
 //server
