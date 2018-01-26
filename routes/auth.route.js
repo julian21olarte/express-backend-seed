@@ -10,7 +10,7 @@ var authMiddleware = require('../middlewares/auth.middleware');
 
 //Routes
 router.post('/login', auth.login);
-router.post('/logout', authMiddleware.foo, auth.logout);
+router.post('/logout', auth.logout);
 
 
 module.exports = router;

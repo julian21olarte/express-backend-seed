@@ -1,13 +1,21 @@
 'use strict';
+const Sequelize = require('sequelize');
 const sequelize = require('../database/config');
-const Poll = require('./poll.model');
-const Answer = require('./answer.model');
 
 const Question = sequelize.define('question', {
-  description: Sequelize.TEXT
-});
+  description: Sequelize.STRING
+}, {
+    classMethods: {
+      associate: function (models) {
+        Question.belongsTo(models.Poll);
+        Question.hasMany(models.Answer);
+      }
+    }
+  });
 
-Question.belongsTo(Poll);
-Question.hasMany(Answer);
+Question.sync()
+  .then(() => {
+    console.log('Creating Questions Table')
+  });
 
 module.exports = Question;

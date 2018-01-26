@@ -1,12 +1,13 @@
 'use strict';
 
 const Sequelize = require('sequelize');
+
 const sequelize = new Sequelize('polls_test', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
 
     pool: {
-        max: 5,
+        max: 50,
         min: 0,
         acquire: 30000,
         idle: 10000
@@ -22,4 +23,4 @@ sequelize
         console.error('Unable to connect to the database:', err);
     });
 
-    module.exports = Sequelize;
+    module.exports = sequelize;
