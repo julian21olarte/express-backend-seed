@@ -1,5 +1,5 @@
 'use strict';
-const userModel = require('../models/user.model');
+const userModel = require('../models').User;
 
 function login(credentials) {
     return userModel.findOne({ where: credentials });

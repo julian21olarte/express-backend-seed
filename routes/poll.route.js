@@ -10,6 +10,7 @@ var pollMiddleware = require('../middlewares/poll.middleware');
 
 //Routes
 router.get('/', poll.get);
+router.get('/:id', poll.getById);
 router.post('/save', poll.save);
 
 

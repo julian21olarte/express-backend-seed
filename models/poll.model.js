@@ -1,23 +1,10 @@
 'use strict';
-const sequelize = require('../database/config');
-const Sequelize = require('sequelize');
 
-const Poll = sequelize.define('poll', {
-  title: Sequelize.STRING,
-  description: Sequelize.STRING,
-
-}, {
-    classMethods: {
-      associate: function (models) {
-        Poll.hasMany(models.Question);
-      }
-    }
+module.exports = (sequelize, DataTypes) => {
+  const Poll = sequelize.define('Poll', {
+    title: DataTypes.STRING,
+    description: DataTypes.STRING
   });
 
-Poll.sync()
-  .then(() => {
-    console.log('Creating Polls Table')
-  });
-
-
-module.exports = Poll;
+  return Poll;
+};

@@ -1,21 +1,15 @@
 'use strict';
-const Sequelize = require('sequelize');
-const sequelize = require('../database/config');
 
-const Question = sequelize.define('question', {
-  description: Sequelize.STRING
-}, {
-    classMethods: {
-      associate: function (models) {
-        Question.belongsTo(models.Poll);
-        Question.hasMany(models.Answer);
-      }
-    }
+module.exports = (sequelize, DataTypes) => {
+  const Question = sequelize.define('Question', {
+    description: DataTypes.STRING
   });
 
-Question.sync()
-  .then(() => {
-    console.log('Creating Questions Table')
-  });
+  Question.associate = function (models) {
+    Question.belongsTo(models.Poll, {
+      foreignKey: 'pollId'
+    });
+  }
 
-module.exports = Question;
+  return Question;
+};

@@ -1,21 +1,27 @@
 'use strict';
-const Sequelize = require('sequelize');
-const sequelize = require('../database/config');
-
-const User = sequelize.define('user', {
-  username: Sequelize.STRING,
-  password: Sequelize.STRING,
-  role: Sequelize.STRING,
-});
-
-// force: true will drop the table if it already exists
-User.sync({force: true}).then(() => {
-  // Table created
-  return User.create({
-    username: 'granactate',
-    password: 'granactate',
-    role: 'ADMIN'
+module.exports = (sequelize, DataTypes) => {
+  var User = sequelize.define('User', {
+    username: DataTypes.STRING,
+    password: DataTypes.STRING,
+    role: DataTypes.STRING
   });
-});
 
-module.exports = User;
+
+
+  User.initialize = function () {
+    let admin = {
+      username: 'granactate',
+      password: 'granactate',
+      role: 'ADMIN'
+    };
+    User.findOne({ where: admin })
+      .then(user => {
+        if (!user) {
+          console.log('Inserting admin in databases');
+          User.create(admin);
+        }
+      });
+  }
+
+  return User;
+};
