@@ -3,6 +3,11 @@
 const authService = require('../services/auth.service');
 
 function login(req, res) {
+    if(req.session.user) {
+        console.log('ya existe un usuario');
+        return res.status(200).send({user: req.session.user});
+    }
+    console.log('No existe un usuario');
     let credentials = req.body;
     authService.login(credentials)
     .then(user => {
