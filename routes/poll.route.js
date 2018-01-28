@@ -6,10 +6,11 @@ var router = express.Router();
 var poll = require('../api/poll.api');
 
 //Middlewares
-var pollMiddleware = require('../middlewares/poll.middleware');
+var authMiddleware = require('../middlewares/auth.middleware');
 
 //Routes
 router.get('/', poll.get);
+router.get('/last', poll.getLastPoll);
 router.get('/:id', poll.getById);
 router.post('/save', poll.save);
 

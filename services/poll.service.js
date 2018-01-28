@@ -9,9 +9,8 @@ function get() {
 }
 
 function getById(id) {
-
   return new Promise((resolve, reject) => {
-    pollModel.findOne({ where: { id } }, { include: [{ model: Question, as: 'questions_max' }] })
+    pollModel.findOne({ where: { id } }, { include: [{ model: Question, as: 'questions' }] })
       .then(poll => {
         if (poll) {
           questionService.getByPollId(poll.id)
@@ -58,9 +57,33 @@ function save(poll) {
   });
 }
 
+function getLast() {
+  console.log('llega hasta aqui');
+  return new Promise( (resolve, reject) => {
+    pollModel.findOne({
+      where: {}, 
+      order: [ [ 'createdAt', 'DESC' ]],
+      attributes: [ 'id' ]
+    })
+    .then(pollId => {
+      console.log('si hay poll');
+      if(pollId) {
+        pollId = pollId.dataValues.id;
+        getById(pollId)
+        .then(pollLast => {
+          if(pollLast) {
+            resolve(pollLast);
+          }
+        });
+      }
+    });
+  })
+}
+
 
 module.exports = {
   get,
   getById,
+  getLast,
   save
 }

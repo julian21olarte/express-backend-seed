@@ -34,14 +34,25 @@ function getById(req, res) {
 }
 
 
+function getLastPoll(req, res) {
+  console.log('entra a lastPoll');
+  pollService.getLast()
+  .then(poll => {
+    if(poll) {
+      res.status(200).send(poll);
+    }
+  })
+  .catch(error => {
+    res.status(500).send({message: 'Error al intentar obtener la ultima encuesta.', error});
+  });
+}
+
 function save(req, res) {
   let poll = req.body;
   pollService.save(poll)
     .then(newPoll => {
       if (newPoll) {
-
         res.status(200).send(newPoll);
-
       }
     })
     .catch(error => {
@@ -55,5 +66,6 @@ function save(req, res) {
 module.exports = {
   get,
   getById,
+  getLastPoll,
   save
 }

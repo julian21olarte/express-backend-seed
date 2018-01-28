@@ -1,8 +1,11 @@
 'use strict';
-const usermodel = require('../models/user.model');
+const usermodel = require('../models').User;
 
 function login(req, res, next) {
-    next();
+    if(req.session.user) {
+        return next();
+    }
+    res.status(401).send('Unauthenticated');
 }
 
 module.exports = {
