@@ -62,10 +62,26 @@ function save(req, res) {
 }
 
 
+function replyLastPoll(req, res) {
+  let lastPoll = req.body;
+  pollService.replyLastPoll(lastPoll)
+  .then(reply => {
+    if(reply) {
+      res.status(200).send(reply);
+    }
+  })
+  .catch(error => {
+    res.status(500).send({ message: 'Error al contestar la encuesta', error });
+  });
+
+}
+
+
 
 module.exports = {
   get,
   getById,
   getLastPoll,
-  save
+  save,
+  replyLastPoll
 }

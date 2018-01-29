@@ -72,9 +72,15 @@ function getLast() {
 }
 
 
+function replyLastPoll(lastPoll) {
+
+}
+
+
 module.exports = {
   get,
   getById,
   getLast,
-  save
+  save,
+  replyLastPoll
 }

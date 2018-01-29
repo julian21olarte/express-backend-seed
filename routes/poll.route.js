@@ -13,6 +13,7 @@ router.get('/', poll.get);
 router.get('/last', poll.getLastPoll);
 router.get('/:id', poll.getById);
 router.post('/save', poll.save);
+router.post('/reply', poll.replyLastPoll);
 
 
 module.exports = router;
