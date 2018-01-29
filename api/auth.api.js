@@ -13,6 +13,7 @@ function login(req, res) {
     .then(user => {
         if(user) {
             req.session.user = user;
+            req.session.save();
             res.status(200).send({user});
         }
         else {
@@ -26,7 +27,7 @@ function login(req, res) {
 
 
 function logout(req, res) {
-    
+    res.status(200).send('Logout ok');
 }
 
 
