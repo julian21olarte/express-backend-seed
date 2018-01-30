@@ -2,6 +2,7 @@
 const pollModel = require('../models').Poll;
 const Question = require('../models').Question;
 const questionService = require('../services/question.service');
+const questionAnswersService = require('./questionAnswers.service');
 
 
 function get() {
@@ -73,7 +74,8 @@ function getLast() {
 
 
 function replyLastPoll(lastPoll) {
-
+  let questions = lastPoll.questions;
+  return questionAnswersService.saveMany(questions);
 }
 
 
