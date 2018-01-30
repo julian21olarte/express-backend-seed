@@ -27,7 +27,12 @@ function login(req, res) {
 
 
 function logout(req, res) {
-    res.status(200).send('Logout ok');
+    req.session.destroy(err => {
+        if(err) {
+            throw err;
+        }
+        return res.status(200).send('Logout ok');
+    });
 }
 
 

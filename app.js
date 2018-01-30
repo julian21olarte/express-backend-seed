@@ -13,25 +13,26 @@ var auth = require('./routes/auth.route');
 
 var app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(session({
   secret: 'julian21olarte',
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
 }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 /* CORS */
-app.use( (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-Key, Origin, X-Request-With, Content-type, Accept, Access-Control-Allow-Request-Method');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
+// app.use( (req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+//   res.header('Access-Control-Allow-Headers', 'Authorization, X-API-Key, Origin, X-Request-With, Content-type, Accept, Access-Control-Allow-Request-Method');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//   res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+//   next();
+// });
+app.use(cors({credentials: true, origin: 'http://localhost:4200'}));
 
 
 //Routes

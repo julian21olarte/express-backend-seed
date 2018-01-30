@@ -9,11 +9,16 @@ var poll = require('../api/poll.api');
 var authMiddleware = require('../middlewares/auth.middleware');
 
 //Routes
-router.get('/', poll.get);
+//All users
 router.get('/last', poll.getLastPoll);
-router.get('/:id', poll.getById);
-router.post('/save', poll.save);
 router.post('/reply', poll.replyLastPoll);
+
+
+//Only Admin
+router.get('/', authMiddleware.login, poll.get);
+router.get('/:id', authMiddleware.login, poll.getById);
+router.post('/save', authMiddleware.login, poll.save);
+
 
 
 module.exports = router;
