@@ -14,7 +14,7 @@ function login(req, res) {
         if(user) {
             req.session.user = user;
             req.session.save();
-            res.status(200).send({user});
+            res.status(200).send(user);
         }
         else {
             res.status(401).send({message: 'Unauthenticate'});
