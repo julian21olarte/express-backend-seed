@@ -45,12 +45,10 @@ function saveMany(questions) {
       questionModel.create(question)
         .then(newQuestion => {
           answers = answerService.addIdToAnswersArray(answers, newQuestion.id);
-          //console.log(answers);
           answerService.saveMany(answers)
             .then(newAnswers => newAnswers.map(answer => answer.dataValues))
             .then(newAnswers => {
               question.answers = newAnswers;
-              console.log('AGREGANDO ANSWERS A QUESTIONS');
               resolve(question);
             });
         });

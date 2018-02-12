@@ -35,11 +35,13 @@ function getById(req, res) {
 
 
 function getLastPoll(req, res) {
-  console.log('entra a lastPoll');
   pollService.getLast()
   .then(poll => {
     if(poll) {
       res.status(200).send(poll);
+    }
+    else {
+      res.status(404).send('Aun no hay encuestas agregadas');
     }
   })
   .catch(error => {
@@ -76,6 +78,19 @@ function replyLastPoll(req, res) {
 
 }
 
+function getPollResponses(req, res) {
+  let id = req.params.id;
+  pollService.getPollResponses(id)
+  .then(responses => {
+    if(responses) {
+      res.status(200).send(responses);
+    }
+  })
+  .catch(error => {
+    res.status(500).send({ message: 'Error al intentar obtener las respuestas.', error });
+  });
+}
+
 
 
 module.exports = {
@@ -83,5 +98,6 @@ module.exports = {
   getById,
   getLastPoll,
   save,
-  replyLastPoll
+  replyLastPoll,
+  getPollResponses
 }

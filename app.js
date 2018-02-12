@@ -17,7 +17,7 @@ app.use(session({
   secret: 'julian21olarte',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: (1000 * 60 * 60 * 24) }
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

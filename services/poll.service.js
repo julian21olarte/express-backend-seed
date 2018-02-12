@@ -52,24 +52,24 @@ function save(poll) {
 }
 
 function getLast() {
-  return new Promise( (resolve, reject) => {
-    pollModel.findOne({
-      where: {}, 
-      order: [ [ 'createdAt', 'DESC' ]],
-      attributes: [ 'id' ]
-    })
+  return pollModel.findOne({
+    where: {},
+    order: [['createdAt', 'DESC']],
+    attributes: ['id']
+  })
     .then(pollId => {
-      if(pollId) {
-        pollId = pollId.dataValues.id;
-        getById(pollId)
+      if (pollId) {
+        return getById(pollId.dataValues.id)
         .then(pollLast => {
-          if(pollLast) {
-            resolve(pollLast);
-          }
-        });
+            return pollLast
+            ? pollLast
+            : new Error('Error al insertar en la base de datos');
+          });
+      }
+      else {
+        return null;
       }
     });
-  })
 }
 
 
@@ -78,11 +78,16 @@ function replyLastPoll(lastPoll) {
   return questionAnswersService.saveMany(questions);
 }
 
+function getPollResponses(pollId) {
+  return questionAnswersService.getResponsesByPollId(pollId);
+}
+
 
 module.exports = {
   get,
   getById,
   getLast,
   save,
-  replyLastPoll
+  replyLastPoll,
+  getPollResponses
 }

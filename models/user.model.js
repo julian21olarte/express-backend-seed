@@ -7,20 +7,23 @@ module.exports = (sequelize, DataTypes) => {
   });
 
 
-
   User.initialize = function () {
     let admin = {
       username: 'granactate',
       password: 'granactate',
       role: 'ADMIN'
     };
-    User.findOne({ where: admin })
-      .then(user => {
-        if (!user) {
-          console.log('Inserting admin in databases');
-          User.create(admin);
-        }
+    User.sync()
+      .then(() => {
+        User.findOne({ where: admin })
+        .then(user => {
+          if (!user) {
+            console.log('Inserting admin in databases');
+            User.create(admin);
+          }
+        });
       });
+    console.log('LOADING User model');
   }
 
   return User;
