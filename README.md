@@ -9,7 +9,7 @@
 2. Npm 5.5 o superior
 3. Mysql 5.7 / MariaDB 10.2
 4. Base de datos creada previamente, `polls_test` por ejemplo
-5. Intalacion del [frontend](https://github.com/julian21olarte/polls-test-frontend) de la aplicacion
+5. Instalacion del [frontend](https://github.com/julian21olarte/polls-test-frontend) de la aplicacion
 
 ## Instalación
 ```
@@ -42,4 +42,9 @@ const sequelize = new Sequelize('polls_test', 'root', 'root', {
 1. Ejecutar `npm start` o `npm run dev` para ejecutar el proyecto.
 ```
 > Por defecto se ejecuta en el puerto `3000`.
+
+```
+2. Por defecto se provee un usuario administrador para realizar pruebas en la aplicacion
+```
+> User: `granactate` y Password: `granactate`
 
