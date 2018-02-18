@@ -6,17 +6,17 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   QuestionAnswer.associate = function (models) {
-    QuestionAnswer.belongsTo(models.Question, {
-      foreignKey: 'questionId'
-    });
+    // QuestionAnswer.belongsTo(models.Question, {
+    //   foreignKey: 'questionId'
+    // });
 
-    QuestionAnswer.belongsTo(models.Answer, {
-      foreignKey: 'answerId'
-    });
+    // QuestionAnswer.belongsTo(models.Answer, {
+    //   foreignKey: 'answerIId'
+    // });
 
-    QuestionAnswer.belongsTo(models.Poll, {
-      foreignKey: 'pollId'
-    });
+    // QuestionAnswer.belongsTo(models.Poll, {
+    //   foreignKey: 'pollId'
+    // });
   }
 
   return QuestionAnswer;

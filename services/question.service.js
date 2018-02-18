@@ -9,53 +9,42 @@ function get(id) {
 
 
 function getByPollId(pollId) {
-
-  return new Promise((resolve, reject) => {
-    questionModel.findAll({ where: { pollId } })
-      .then(questions => {
-        if (questions) {
-          Promise.all(questions.map(question => {
-            return new Promise((resolve, reject) => {
-              answerService.getByQuestionId(question.id)
-                .then(answers => {
-                  if (answers) {
-                    question = question.dataValues;
-                    question.answers = answers;
-                    resolve(question);
-                  }
-                });
-            });
-          }))
-            .then(questions => {
-              if(questions) {
-                resolve(questions);
+  return questionModel.findAll({ where: { pollId } })
+    .then(questions => {
+      if (questions) {
+        return Promise.all(questions.map(question => {
+          return answerService.getByQuestionId(question.id)
+            .then(answers => {
+              if (answers) {
+                question = question.dataValues;
+                question.answers = answers;
+                return question;
               }
             });
-        }
-      });
-  });
+        }));
+      }
+    });
 }
 
-
 function saveMany(questions) {
-  //return questionModel.bulkCreate(questions);
   return Promise.all(questions.map(question => {
-    return new Promise((resolve, reject) => {
-      let answers = question.answers;
-      questionModel.create(question)
-        .then(newQuestion => {
-          answers = answerService.addIdToAnswersArray(answers, newQuestion.id);
-          answerService.saveMany(answers)
-            .then(newAnswers => newAnswers.map(answer => answer.dataValues))
-            .then(newAnswers => {
-              question.answers = newAnswers;
-              resolve(question);
-            });
-        });
-    });
+    let answers = question.answers;
+    return questionModel.create(question)
+      .then(newQuestion => answerService.addIdToAnswersArray(answers, newQuestion.id))
+      .then(answersArray => {
+        return answerService.saveMany(answersArray)
+          .then(newAnswers => newAnswers.map(answer => answer.dataValues))
+          .then(newAnswers => {
+            question.answers = newAnswers;
+            return question;
+          });
+      });
   }));
 }
 
+function deleteByPollId(pollId) {
+  return questionModel.destroy({where: {pollId}});
+}
 
 function addIdToQuestionsArray(questions, id) {
   return questions.map(function (question) {
@@ -68,6 +57,7 @@ function addIdToQuestionsArray(questions, id) {
 module.exports = {
   get,
   saveMany,
+  deleteByPollId,
   addIdToQuestionsArray,
   getByPollId
 }

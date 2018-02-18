@@ -16,6 +16,10 @@ function saveMany(answers) {
     return answerModel.bulkCreate(answers);
 }
 
+function deleteByQuestionId(questionId) {
+    return answerModel.destroy({where: {questionId}});
+}
+
 
 function addIdToAnswersArray(answers, id) {
     return answers.map(function(answer) {
@@ -27,6 +31,7 @@ function addIdToAnswersArray(answers, id) {
 module.exports = {
     get,
     saveMany,
+    deleteByQuestionId,
     addIdToAnswersArray,
     getByQuestionId
 }

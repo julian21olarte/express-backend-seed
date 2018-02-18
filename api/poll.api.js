@@ -60,7 +60,21 @@ function save(req, res) {
     .catch(error => {
       res.status(500).send({ message: 'Error al crear encuesta', error });
     });
+}
 
+
+function update(req, res) {
+  let poll = req.body;
+  let id = req.params.id;
+  pollService.update(id, poll)
+    .then(pollUpdated => {
+      if (pollUpdated) {
+        res.status(200).send(pollUpdated);
+      }
+    })
+    .catch(error => {
+      res.status(500).send({ message: 'Error al editar la encuesta', error });
+    });
 }
 
 
@@ -98,6 +112,7 @@ module.exports = {
   getById,
   getLastPoll,
   save,
+  update,
   replyLastPoll,
   getPollResponses
 }

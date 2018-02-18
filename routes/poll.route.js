@@ -19,6 +19,7 @@ router.post('/reply', poll.replyLastPoll);
 router.get('/', authMiddleware.login, poll.get);
 router.get('/:id', authMiddleware.login, poll.getById);
 router.post('/save', authMiddleware.login, poll.save);
+router.put('/update/:id', authMiddleware.login, poll.update);
 
 
 

@@ -6,5 +6,19 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING
   });
 
+  Poll.associate = function (models) {
+    Poll.hasMany(models.Question, {
+      foreignKey: 'pollId',
+      onDelete: 'cascade',
+      hooks: true
+    });
+
+    Poll.hasMany(models.QuestionAnswer, {
+      foreignKey: 'pollId',
+      onDelete: 'cascade',
+      hooks: true,
+    });
+  }
+
   return Poll;
 };
